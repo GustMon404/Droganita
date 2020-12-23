@@ -1,0 +1,37 @@
+{% extends 'pedidos/home.html' %}
+
+{% block title %}
+<title>Gerar Relatório</title>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'teste' %}" method="GET">
+    <div class="row justify-content-md-center">
+          <div class="form-group col-md-4">
+              <label for="inputEstado">Tipo</label>
+              <select id="tipo" name="tipo" class="form-control">
+                  <option selected value="TD">Todos</option>
+                  <option value="TDM">Todos Medicamentos</option>
+                  <option value="PF">Perfumaria</option>
+                  <option value="ET">Etico</option>
+                  <option value="SM">Similar</option>
+                  <option value="GN">Genérico</option>]
+                  <option value="GNSM">Generico e Similares</option>
+              </select>
+          </div>
+      <br>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="falta" name="falta" value="True">
+              <label class="form-check-label" for="falta">Faltas</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="encomenda" id="encomenda" value="True">
+              <label class="form-check-label" for="encomenda" >Encomendas</label>
+          </div>
+    </div>
+  <input class="btn btn-primary" type="submit" value="Teste">
+</form>
+
+
+
+{% endblock %}

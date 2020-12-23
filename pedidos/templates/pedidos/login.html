@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'pedidos/css/my_style.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-warning" role="alert">
+              {{ m }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="container">
+        <div class="centralizar">
+            <div class="card" style="width: 30rem;">
+                <img class="card-img-top" src="{% static 'pedidos/images/farmacia2.jpg' %}" alt="Imagem de capa do card">
+                <div class="card-body">
+                    <form action="." method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Usuário: </label>
+                            {{ form_login.username }}
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Senha: </label>
+                            {{ form_login.password }}
+                        </div>
+                        <input class="btn btn-primary" type="submit" value="Entrar">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
