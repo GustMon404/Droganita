@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.db import connection
 
 from .forms import LoginForms, PedidosForm
 from .models import *
@@ -55,10 +56,30 @@ def logout_user(request):
     return redirect(reverse('login'))
 
 
+# usar regex
 def teste(request):
-    if request.GET.get('tipo') == 'TDM':
-        pass
-    f = request.GET.get('falta')
-    e = request.GET.get('encomenda')
-    return HttpResponse(e)
+    tipos = {
+        'etico': "'ET'",
+        'generico': "'GN'",
+        'similar': "'SM'",
+        'perfumaria': "'PF'",
+        'todos_med': "'ET','GN','SM'",
+        'gensim': "'GN','SM'",
+        'todos':"'ET','GN','SM','PF'"
+    }
+    tipo = tipos.get(request.GET.get('tipo'))
+
+    falta = "falta='false'"
+    encomenda = "encomenda=false"
+
+    if request.GET.get('falta'):
+        falta = "falta=true"
+    if request.GET.get('encomenda'):
+        encomenda = "encomenda=true"
+
+    consulta = "select * from pedidos_pedido where tipo in ({}) and {} and {}".format(tipo, falta, encomenda)
+
+    cursor = connection.cursor()
+    cursor.execute(consulta)
+    return HttpResponse(cursor.fetchall())
 # Create your views here.
